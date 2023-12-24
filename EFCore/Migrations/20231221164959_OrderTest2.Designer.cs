@@ -3,6 +3,7 @@ using EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221164959_OrderTest2")]
+    partial class OrderTest2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,11 +42,6 @@ namespace EFCore.Migrations
                         .HasAnnotation("ColumnOrder", 2);
 
                     b.Property<int>("OrganizationId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(4)
-                        .HasAnnotation("ColumnOrder", 4);
-
-                    b.Property<int>("OrganizationId2")
                         .HasColumnType("int")
                         .HasColumnOrder(3)
                         .HasAnnotation("ColumnOrder", 3);
