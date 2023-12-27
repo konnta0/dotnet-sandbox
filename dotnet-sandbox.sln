@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net8.ConsoleApp", "src\Net8.ConsoleApp\Net8.ConsoleApp.csproj", "{32205640-D1A0-4750-B800-2C77235B83AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore", "EFCore\EFCore.csproj", "{A33E73CF-F5E5-4032-BA89-92904682DBB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore", "src\EFCore\EFCore.csproj", "{A33E73CF-F5E5-4032-BA89-92904682DBB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{C3AEF02C-26E6-4CA2-8938-9C3604931CEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "src\BlazorApp\BlazorApp.csproj", "{C3AEF02C-26E6-4CA2-8938-9C3604931CEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
