@@ -1,0 +1,15 @@
+FROM node:16-alpine3.15
+
+# Required for install
+#RUN apt-get update && apt-get install -y curl libunwind8
+#
+## NodeJS
+#RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+#	apt-get update && apt-get install -y nodejs && \
+#	npm install npm@latest -g
+
+# Autorest
+RUN npm install -g autorest@latest
+RUN autorest --reset --allow-no-input --csharp --ruby --python --java --go --nodejs --typescript --azure-validator --preview
+
+ENTRYPOINT ["autorest"]
