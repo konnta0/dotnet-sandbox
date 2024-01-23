@@ -11,7 +11,7 @@ RUN echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
 RUN echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc
 
 # Autorest
-RUN npm install -g autorest@latest
+RUN npm install -g autorest@3.7.1
 RUN autorest --reset --allow-no-input --csharp --azure-validator --preview
 
 ENTRYPOINT [ "autorest" ]
