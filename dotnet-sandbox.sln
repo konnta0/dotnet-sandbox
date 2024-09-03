@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "src\WebApp\WebApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRest", "src\AutoRest\AutoRest.csproj", "{884961F0-F24D-4D0E-854E-5A6A7D02E7FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisPubSub", "src\RedisPubSub\RedisPubSub.csproj", "{1AE59F62-3A33-4EEE-9E0B-52D417754A99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{884961F0-F24D-4D0E-854E-5A6A7D02E7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{884961F0-F24D-4D0E-854E-5A6A7D02E7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{884961F0-F24D-4D0E-854E-5A6A7D02E7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE59F62-3A33-4EEE-9E0B-52D417754A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE59F62-3A33-4EEE-9E0B-52D417754A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE59F62-3A33-4EEE-9E0B-52D417754A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE59F62-3A33-4EEE-9E0B-52D417754A99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
