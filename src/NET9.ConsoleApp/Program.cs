@@ -16,3 +16,21 @@ n.Test(0);
 
 var z = n.Test;
 #endregion
+
+#region implict index access
+var v = new S
+{
+    Buffer = 
+    {
+        [1] = 11,
+        [2] = 12,
+        [^1] = 111,
+        [^2] = 222,
+    }
+};
+
+foreach (var vb in v.Buffer)
+{
+    Console.WriteLine(vb);
+}
+#endregion
