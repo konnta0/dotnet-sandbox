@@ -16,4 +16,14 @@ public class NET9NewFeatures
         var json = JsonSerializer.Serialize(new { Value = 1 }, options);
         Console.WriteLine(json);
     }
+
+    public void JsonDefaultWebOption()
+    {
+        var webJson = JsonSerializer.Serialize(
+            new { SomeValue = 42, Hoo = "test" },
+            JsonSerializerOptions.Web 
+        );
+
+        Console.WriteLine(webJson);
+    }
 }

@@ -39,3 +39,6 @@ var net9 = new NET9NewFeatures();
 #region JSON indent option
 net9.JsonIndentOption();
 #endregion
+#region JSON default web option
+net9.JsonDefaultWebOption();
+#endregion
