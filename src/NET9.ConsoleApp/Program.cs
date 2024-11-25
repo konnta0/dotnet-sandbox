@@ -42,3 +42,9 @@ net9.JsonIndentOption();
 #region JSON default web option
 net9.JsonDefaultWebOption();
 #endregion
+#region CountBy
+net9.CountBy();
+#endregion
+#region AggregateBy
+net9.AggregateBy();
+#endregion
