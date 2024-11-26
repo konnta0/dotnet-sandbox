@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace NET9.ConsoleApp;
 
@@ -65,6 +66,29 @@ public class NET9NewFeatures
         foreach (var item in aggregatedData)
         {
             Console.WriteLine(item);
+        }
+    }
+
+    public void AlternateLookup()
+    {
+        const string sourceText = """
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Sed non risus. Suspendisse lectus tortor, dignissim sit amet, 
+                                adipiscing nec, ultricies sed, dolor. Cras elementum ultrices amet diam.
+                            """;
+        
+        Dictionary<string, int> wordCounts = new(StringComparer.OrdinalIgnoreCase);
+        var spanLookup = wordCounts.GetAlternateLookup<ReadOnlySpan<char>>();
+        var input = sourceText.AsSpan();
+        foreach (var wordRange in Regex.EnumerateSplits(input, @"\b\w+\b"))
+        {
+            var word = input[wordRange];
+            spanLookup[word] = spanLookup.TryGetValue(word, out var count) ? count + 1 : 1;
+        }
+
+        foreach (var (word, count) in wordCounts)
+        {
+            Console.WriteLine($"{word}: {count}");
         }
     }
 }

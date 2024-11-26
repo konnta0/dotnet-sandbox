@@ -48,3 +48,7 @@ net9.CountBy();
 #region AggregateBy
 net9.AggregateBy();
 #endregion
+
+#region AlternateLookup
+net9.AlternateLookup();
+#endregion
