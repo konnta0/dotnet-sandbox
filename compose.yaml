@@ -1,0 +1,6 @@
+﻿services:
+  32bitwebapplication:
+    image: 32bitwebapplication
+    build:
+      context: .
+      dockerfile: 32bitWebApplication/Dockerfile
