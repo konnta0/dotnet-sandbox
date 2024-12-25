@@ -33,9 +33,9 @@ app.MapGet("/weatherforecast", () =>
             .ToArray();
 
 
-        var dic = new Dictionary<string, object>()
+        var dic = new Dictionary<string, object>
         {
-            { "test", "1" },
+            { "test", "TWVldCBCYXNlNjQgRGVjb2RlIGFuZCBFbmNvZGUsIGEgc2ltcGxlIG9ubGluZSB0b29sIHRoYXQgZG9lcyBleGFjdGx5IHdoYXQgaXQgc2F5czogZGVjb2RlcyBmcm9tIEJhc2U2NCBlbmNvZGluZyBhcyB3ZWxsIGFzIGVuY29kZXMgaW50byBpdCBxdWlja2x5IGFuZCBlYXNpbHkuIEJhc2U2NCBlbmNvZGUgeW91ciBkYXRhIHdpdGhvdXQgaGFzc2xlcyBvciBkZWNvZGUgaXQgaW50byBhIGh1bWFuLXJlYWRhYmxlIGZvcm1hdC4K" },
             { "hoge", "1" },
             { "fuga", "1" },
         };

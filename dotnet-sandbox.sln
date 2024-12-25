@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisPubSub", "src\RedisPub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET9.ConsoleApp", "src\NET9.ConsoleApp\NET9.ConsoleApp.csproj", "{E07A21A3-7CF6-45FE-BEBF-B0EC1ACB4CB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "32bitWebApplication", "32bitWebApplication\32bitWebApplication.csproj", "{77BD61E1-BD51-46F1-8E58-92B9D862C8E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "32bitWebApplication", "src\32bitWebApplication\32bitWebApplication.csproj", "{77BD61E1-BD51-46F1-8E58-92B9D862C8E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC756A81-A4AB-4A1B-B569-520846DAAC30}"
 	ProjectSection(SolutionItems) = preProject
