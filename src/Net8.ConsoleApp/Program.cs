@@ -7,5 +7,5 @@ var n = new MethodGroupNatualType();
 n.Test();
 n.Test(0);
 
-var z = n.Test();
+//var z = n.Test();
 #endregion
