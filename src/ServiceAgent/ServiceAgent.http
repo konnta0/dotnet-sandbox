@@ -1,0 +1,6 @@
+@ServiceAgent_HostAddress = https://localhost:7002
+
+GET {{ServiceAgent_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
