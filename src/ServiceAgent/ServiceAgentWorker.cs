@@ -87,7 +87,6 @@ internal sealed class ServiceAgentWorker(
         {
             return context.As<RoomServiceAgentContext>();
         }
-        logger.LogWarning("Context {ContextId} is not running", contextId);
         return null;
     }
     
