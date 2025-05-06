@@ -5,38 +5,21 @@ namespace ServiceAgent;
 
 internal sealed class ServiceAgentWorker(
     IServiceScopeFactory serviceScopeFactory, 
-    ILogger<ServiceAgentWorker> logger) : IHostedService, IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter>, IAsyncDisposable
+    ILogger<ServiceAgentWorker> logger) : BackgroundService, IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter>, IAsyncDisposable
 {
     private readonly ConcurrentDictionary<string, IExecutionServiceAgentContext> _agents = new();
     private CancellationTokenSource? _cts = new();
-    
-    public async Task StartAsync(CancellationToken cancellationToken)
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        var timer = new PeriodicTimer(TimeSpan.FromSeconds(60));
-        while (await timer.WaitForNextTickAsync(cancellationToken))
+        _cts = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken); 
+        var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+        while (await timer.WaitForNextTickAsync(stoppingToken))
         {
             logger.LogInformation("ServiceAgentWorker is running");
         }
     }
-
-    public async Task StopAsync(CancellationToken cancellationToken)
-    {
-        foreach (var agent in _agents.Values)
-        {
-            try
-            {
-                await agent.StopAsync();
-                agent.Dispose();
-                _agents.TryRemove(agent.ContextId, out _);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Failed to stop context {ContextId}", agent.ContextId);
-            }
-        }
-    }
-
+    
     public async ValueTask StartAsync(string contextId, RoomServiceAgentParameter param, CancellationToken? cancellationToken = null)
     {
         if (_agents.TryGetValue(contextId, out _))

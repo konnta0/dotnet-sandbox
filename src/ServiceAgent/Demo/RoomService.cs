@@ -6,4 +6,9 @@ internal sealed class RoomService
     {
         await Task.Delay(1000);
     }
+
+    public async ValueTask RemoveAsync(Room room)
+    {
+        await Task.Delay(1000);
+    }
 }

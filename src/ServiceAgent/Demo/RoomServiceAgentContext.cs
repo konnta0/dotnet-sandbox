@@ -15,7 +15,8 @@ internal class RoomServiceAgentContext : IExecutionServiceAgentContext
         _parameter = parameter;
         ContextId = contextId;
         ServiceProvider = serviceProvider;
-        Room = new Room
+        var gameService = ServiceProvider.GetRequiredService<GameService>();
+        Room = new Room(gameService)
         {
             Id = contextId,
             Name = parameter.Name,
@@ -33,12 +34,11 @@ internal class RoomServiceAgentContext : IExecutionServiceAgentContext
         IsRunning = true;
     }
 
-    public ValueTask StopAsync()
+    public async ValueTask StopAsync()
     {
         var roomService = ServiceProvider.GetRequiredService<RoomService>();
-        roomService.RemoveAsync(Room);
+        await roomService.RemoveAsync(Room);
         IsRunning = false;
-        return ValueTask.CompletedTask;
     }
 
     public bool IsRunning { get; private set; }
