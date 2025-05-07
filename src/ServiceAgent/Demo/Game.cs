@@ -17,11 +17,12 @@ internal sealed class Game
     public ValueTask StartAsync(CancellationToken cancellationToken)
     {
         using var looper = new LogicLooper(60);
-        looper.RegisterActionAsync((in LogicLooperActionContext ctx) =>
+        _ = looper.RegisterActionAsync((in LogicLooperActionContext ctx) =>
         {
             _logger.LogInformation("Game {Id} is running", Id);
             return true;
-        }).Forget();
+        });
+        
         return ValueTask.CompletedTask;
     }
 }

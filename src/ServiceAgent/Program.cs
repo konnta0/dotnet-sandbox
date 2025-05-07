@@ -12,6 +12,7 @@ builder.Services.AddHostedService<ServiceAgentWorker>();
 builder.Services.AddSingleton<IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter>, ServiceAgentWorker>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<GameService>();
+builder.Services.AddScoped<RoomRepository>();
 
 
 var app = builder.Build();
