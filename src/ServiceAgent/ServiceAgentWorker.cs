@@ -5,7 +5,7 @@ namespace ServiceAgent;
 
 internal sealed class ServiceAgentWorker(
     IServiceScopeFactory serviceScopeFactory, 
-    ILogger<ServiceAgentWorker> logger) : BackgroundService, IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter>, IAsyncDisposable
+    ILogger<ServiceAgentWorker> logger) : BackgroundService, IServiceAgent<RoomServiceAgentContext>, IAsyncDisposable
 {
     private readonly ConcurrentDictionary<string, IExecutionServiceAgentContext> _agents = new();
     private CancellationTokenSource? _cts = new();
@@ -20,7 +20,7 @@ internal sealed class ServiceAgentWorker(
         }
     }
     
-    public async ValueTask StartAsync(string contextId, RoomServiceAgentParameter param, CancellationToken? cancellationToken = null)
+    public async ValueTask StartAsync(string contextId, object? param, CancellationToken? cancellationToken = null)
     {
         if (_agents.TryGetValue(contextId, out _))
         {
@@ -28,8 +28,14 @@ internal sealed class ServiceAgentWorker(
             return;
         }
 
+        if (param is not RoomServiceAgentParameter parameter)
+        {
+            logger.LogWarning("Invalid parameter type: {ParamType}", param?.GetType());
+            return;
+        }
+        
         var scope = serviceScopeFactory.CreateScope();
-        var context = new RoomServiceAgentContext(param, contextId, scope.ServiceProvider);
+        var context = new RoomServiceAgentContext(parameter, contextId, scope.ServiceProvider);
         if (!_agents.TryAdd(contextId, context))
         {
             logger.LogWarning("Context {ContextId} is already running", contextId);

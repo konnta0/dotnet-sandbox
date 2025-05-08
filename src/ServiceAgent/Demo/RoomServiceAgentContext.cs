@@ -3,6 +3,7 @@ namespace ServiceAgent.Demo;
 internal class RoomServiceAgentContext : IExecutionServiceAgentContext
 {
     private readonly RoomServiceAgentParameter _parameter;
+    private ILogger<RoomServiceAgentContext> _logger;
     public string RoomId => ContextId;
     public readonly Room Room;
     
@@ -23,6 +24,7 @@ internal class RoomServiceAgentContext : IExecutionServiceAgentContext
             Description = parameter.Description,
             Capacity = parameter.Capacity
         };
+        _logger = ServiceProvider.GetRequiredService<ILogger<RoomServiceAgentContext>>();
     }
 
     public async ValueTask StartAsync(CancellationToken cancellationToken)
@@ -41,6 +43,10 @@ internal class RoomServiceAgentContext : IExecutionServiceAgentContext
         IsRunning = false;
     }
 
+    public async ValueTask UpdateAsync()
+    {
+    }
+    
     public bool IsRunning { get; private set; }
     
     public void Dispose()

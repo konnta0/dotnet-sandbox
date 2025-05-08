@@ -2,9 +2,9 @@ using System.Diagnostics.Contracts;
 
 namespace ServiceAgent;
 
-internal interface IServiceAgent<out T, in TU> where T : IExecutionServiceAgentContext
+internal interface IServiceAgent<out T> where T : IExecutionServiceAgentContext
 {
-    ValueTask StartAsync(string contextId, TU param, CancellationToken? cancellationToken = null);
+    ValueTask StartAsync(string contextId, object? param, CancellationToken? cancellationToken = null);
     ValueTask<bool> StopAsync(string contextId);
     bool IsRunning(string contextId);
     T? GetContext(string contextId);

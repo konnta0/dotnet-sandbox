@@ -1,3 +1,4 @@
+using Cysharp.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 using ServiceAgent;
@@ -9,10 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddHostedService<ServiceAgentWorker>();
-builder.Services.AddSingleton<IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter>, ServiceAgentWorker>();
+builder.Services.AddSingleton<IServiceAgent<RoomServiceAgentContext>, ServiceAgentWorker>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<RoomRepository>();
+builder.Services.AddSingleton<ILogicLooperPool>(_ =>
+    new LogicLooperPool(10, Environment.ProcessorCount, RoundRobinLogicLooperPoolBalancer.Instance));
+builder.Services.AddHostedService<LoopHostedService>();
+builder.Services.Configure<HostOptions>(static options => { options.ShutdownTimeout = TimeSpan.FromSeconds(10); });
 
 
 var app = builder.Build();
@@ -26,14 +31,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/rooms", ([FromServices] IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter> roomServiceAgentContext) =>
+app.MapGet("/rooms", ([FromServices] IServiceAgent<RoomServiceAgentContext> roomServiceAgentContext) =>
     {
         var contexts = roomServiceAgentContext.GetContexts();
         return Results.Ok(contexts);
     })
     .WithName("GetAllRooms");
 
-app.MapGet("/rooms/{roomId}", (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter> roomServiceAgentContext) =>
+app.MapGet("/rooms/{roomId}", (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext> roomServiceAgentContext) =>
     {
         var roomServiceAgent = roomServiceAgentContext.GetContext(roomId);
         if (roomServiceAgent is null)
@@ -45,7 +50,7 @@ app.MapGet("/rooms/{roomId}", (string roomId, [FromServices] IServiceAgent<RoomS
     })
     .WithName("GetRoom");
 
-app.MapPost("/rooms/{roomId}", (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter> roomServiceAgentContext) =>
+app.MapPost("/rooms/{roomId}", async (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext> roomServiceAgentContext) =>
     {
         var roomServiceAgent = roomServiceAgentContext.GetContext(roomId);
         if (roomServiceAgent is not null)
@@ -53,20 +58,20 @@ app.MapPost("/rooms/{roomId}", (string roomId, [FromServices] IServiceAgent<Room
             return Results.Conflict($"Room {roomId} already exists");
         }
 
-        roomServiceAgentContext.StartAsync(roomId, new RoomServiceAgentParameter
+        await roomServiceAgentContext.StartAsync(roomId, new RoomServiceAgentParameter
         {
             Name = "Room " + roomId,
             Description = "this is a test room",
             Capacity = 1,
             GameType = "test"
-        }).Forget();
+        });
         roomServiceAgent = roomServiceAgentContext.GetContext(roomId);
 
         return Results.Ok(roomServiceAgent);
     })
     .WithName("CreateRoom");
 
-app.MapDelete("/rooms/{roomId}", async (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter> roomServiceAgentContext) =>
+app.MapDelete("/rooms/{roomId}", async (string roomId, [FromServices] IServiceAgent<RoomServiceAgentContext> roomServiceAgentContext) =>
     {
         var roomServiceAgent = roomServiceAgentContext.GetContext(roomId);
         if (roomServiceAgent is null)
@@ -81,7 +86,7 @@ app.MapDelete("/rooms/{roomId}", async (string roomId, [FromServices] IServiceAg
     .WithName("DeleteRoom");
 
 app.MapPost("/rooms/{roomId}/games", async (string roomId, 
-        [FromServices] IServiceAgent<RoomServiceAgentContext, RoomServiceAgentParameter> roomServiceAgentContext,
+        [FromServices] IServiceAgent<RoomServiceAgentContext> roomServiceAgentContext,
         [FromBody] (string id, string name, string type) game,
         CancellationToken cancellation) =>
     {
