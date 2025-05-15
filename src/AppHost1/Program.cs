@@ -17,4 +17,9 @@ builder
     .WithReplicas(3)
     .WithReference(controller);
 
+builder
+    .AddProject<Projects.WebApplication1>("web")
+    .WithReference(controller)
+    .WithHttpsEndpoint(port: 7023, targetPort: 7023, isProxied: false);
+
 builder.Build().Run();

@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\DFrameController\DFrameController.csproj" />
       <ProjectReference Include="..\DFrameWorker\DFrameWorker.csproj" />
+      <ProjectReference Include="..\WebApplication1\WebApplication1.csproj" />
     </ItemGroup>
 
 </Project>

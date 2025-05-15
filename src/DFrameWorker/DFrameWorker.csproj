@@ -9,6 +9,11 @@
 
     <ItemGroup>
       <PackageReference Include="DFrame.Worker" Version="1.2.2" />
+      <PackageReference Include="MagicOnion.Client" Version="7.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DFrameShared\DFrameShared.csproj" />
     </ItemGroup>
 
 </Project>
