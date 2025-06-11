@@ -7,6 +7,7 @@ namespace EFCore;
 public class CoreDbContext : DbContext
 {
     public DbSet<ExampleEntity> ExampleEntities { get; init; } = default!;
+    public DbSet<EventSchedule> EventSchedules { get; init; } = default!;
 
     public CoreDbContext(DbContextOptions<CoreDbContext> dbContextOptions) : base(dbContextOptions)
     {
@@ -29,5 +30,10 @@ public class CoreDbContext : DbContext
                 property.SetColumnOrder(attr.Order);
             }
         }
+
+        // マスターデータの設定
+        modelBuilder.Entity<EventSchedule>().HasData(
+            Data.EventSchedulesSeedData.SeedData
+        );
     }
 }
