@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EFCore;
 
-namespace EFCore.Entities;
+namespace DataEditor.UI.Entities;
 
 [Table("Examples")]
 public sealed class ExampleEntity
